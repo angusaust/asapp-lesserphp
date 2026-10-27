@@ -39,6 +39,14 @@
  * handling things like indentation.
  */
 class lessc {
+	/** Historical public state, explicitly declared for PHP 8.2. */
+	public $_parseFile;
+	public $env;
+	public $formatter;
+	public $formatterName;
+	public $parser;
+	public $scope;
+
 	static public $VERSION = "v0.6.0";
 
 	static public $TRUE = array("keyword", "true");
@@ -1376,7 +1384,7 @@ class lessc {
 					$name = $name . ": ";
 				}
 
-				$this->throwError("${name}expecting $expectedArgs arguments, got $numValues");
+				$this->throwError("{$name}expecting $expectedArgs arguments, got $numValues");
 			}
 
 			return $values;
@@ -1392,7 +1400,7 @@ class lessc {
             	$name = $name . ": ";
         	}
 
- 			$this->throwError("${name}expecting at least $expectedMinArgs arguments, got $numValues");
+			$this->throwError("{$name}expecting at least $expectedMinArgs arguments, got $numValues");
  		}
 
  		return $values;
@@ -1737,7 +1745,7 @@ class lessc {
 		}
 
 		// type based operators
-		$fname = "op_${ltype}_${rtype}";
+		$fname = "op_{$ltype}_{$rtype}";
 		if (is_callable(array($this, $fname))) {
 			$out = $this->$fname($op, $left, $right);
 			if (!is_null($out)) return $out;
@@ -2503,6 +2511,19 @@ class lessc {
 // responsible for taking a string of LESS code and converting it into a
 // syntax tree
 class lessc_parser {
+	/** Historical public state, explicitly declared for PHP 8.2. */
+	public $buffer;
+	public $count;
+	public $currentProperty;
+	public $eatWhiteDefault;
+	public $env;
+	public $inExp;
+	public $lessc;
+	public $line;
+	public $seenComments;
+	public $sourceName;
+	public $writeComments;
+
 	static protected $nextBlockId = 0; // used to uniquely identify blocks
 
 	static protected $precedence = array(
@@ -3904,6 +3925,9 @@ class lessc_parser {
 }
 
 class lessc_formatter_classic {
+	/** Historical public state, explicitly declared for PHP 8.2. */
+	public $indentLevel;
+
 	public $indentChar = "  ";
 
 	public $break = "\n";

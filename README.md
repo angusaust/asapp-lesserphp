@@ -99,3 +99,18 @@ output run this:
 
 For more help, run `plessc --help`
 
+
+## Angus PHP 8.2 maintenance (v1.0.2)
+
+The global `lessc` API and compiler algorithms are retained. Deprecated string
+interpolation syntax is updated, and 18 historical public runtime-state fields
+are explicitly declared, without types or `AllowDynamicProperties` attributes.
+
+Declarations intentionally change internal object representation: a newly
+constructed compiler exposes six additional null public fields, `property_exists()`
+can become true before a field is assigned, and field enumeration/order and PHP
+serialization may differ for compiler, parser and formatter instances. Do not
+rely on their old serialized internal layout. Compiler output and public
+operations are checked against the previous Angus version under PHP 8.1/8.2.
+Existing float-to-int deprecations in color arithmetic also occur under PHP 8.1;
+this release preserves those algorithms rather than changing their rounding.

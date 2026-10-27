@@ -15,6 +15,9 @@ function _quote($str) {
 }
 
 class InputTest extends TestCase {
+	/** @var lessc */
+	public $less;
+
 	protected static $importDirs = array("inputs/test-imports");
 
 	protected static $testDirs = array(
